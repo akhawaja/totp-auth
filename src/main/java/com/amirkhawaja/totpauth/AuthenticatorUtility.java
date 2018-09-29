@@ -105,7 +105,7 @@ public class AuthenticatorUtility {
 	 * @throws IOException Unable to write to the image file.
 	 */
 	public void createQRCode(final String barCodeData, final String filePath, final int height, final int width) throws
-			WriterException, IOException {
+		WriterException, IOException {
 		final BitMatrix matrix = new MultiFormatWriter().encode(barCodeData, BarcodeFormat.QR_CODE, width, height);
 
 		try (FileOutputStream out = new FileOutputStream(filePath)) {
@@ -132,6 +132,13 @@ public class AuthenticatorUtility {
 		       URLEncoder.encode(issuer, StandardCharsets.UTF_8).replace("+", "%20");
 	}
 
+	/**
+	 * Generate the TOTP.
+	 *
+	 * @param secretKey The secret of the account.
+	 * @param returnDigits The number of digits in the OTP.
+	 * @return The OTP.
+	 */
 	private String generateTOTP(final String secretKey, final int returnDigits) {
 		if (returnDigits != 6 && returnDigits != 8) {
 			throw new IllegalArgumentException("returnDigits must be either 6 or 8");
